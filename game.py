@@ -93,6 +93,8 @@ def collision_sprite():
         return True
 
 pygame.init()
+game_icon = pygame.image.load('graphics/player/player_stand.png')
+pygame.display.set_icon(game_icon)
 screen = pygame.display.set_mode((800, 400))
 pygame.display.set_caption('Runner')
 clock = pygame.time.Clock()
@@ -142,14 +144,12 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
-
-        if not game_active and event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            game_active = True
-            start_time = int(pygame.time.get_ticks() / 1000)
-
-        if game_active:
-            if event.type == obstacle_timer:
-                obstacle_group.add(Obstacle(choice(['fly', 'snail', 'snail', 'snail'])))
+        elif not game_active:
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                game_active = True
+                start_time = int(pygame.time.get_ticks() / 1000)
+        elif event.type == obstacle_timer:
+            obstacle_group.add(Obstacle(choice(['fly', 'snail', 'snail', 'snail'])))
 
     if game_active:
         screen.blit(sky_surface, (0, 0))
